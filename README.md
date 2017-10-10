@@ -1,1 +1,1 @@
-"# quiz-bowl" 
+# quiz-bowl"
