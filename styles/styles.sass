@@ -1,0 +1,72 @@
+@import 'theme'
+
+html
+    width: 100%
+    height: 100%
+    padding: 0
+    margin: 0
+
+    body
+        @extend html
+        padding: 20px
+        box-sizing: border-box
+
+        #buttons
+            position: fixed
+            top: 0
+            right: 0
+            margin: 0
+            padding: 0
+            width: 125px
+            height: 45px
+
+            &:hover
+                #minimize
+                    margin-top: 10px
+
+                #close
+                    margin-top: 10px
+
+                #maximize
+                    margin-top: 10px
+
+            #minimize
+                background-image: url('./images/minimize.png')
+                background-position: 0 0
+                background-size: 100% 100%
+                width: 25px
+                height: 25px
+                margin: 10px
+                margin-top: -50px
+                margin-right: 0px
+                content: " "
+                float: right
+                transition: margin-top .5s .1s
+                cursor: pointer
+
+            #maximize
+                background-image: url('./images/maximize.png')
+                background-position: 0 0
+                background-size: 100% 100%
+                width: 25px
+                height: 25px
+                margin: 10px
+                margin-top: -50px
+                margin-right: 0px
+                content: " "
+                float: right
+                transition: margin-top .5s .05s
+                cursor: pointer
+            
+            #close
+                background-image: url('./images/close.png')
+                background-position: 0 0
+                background-size: 100% 100%
+                width: 25px
+                height: 25px
+                margin: 10px
+                margin-top: -50px
+                content: " "
+                float: right
+                transition: margin-top .5s
+                cursor: pointer
