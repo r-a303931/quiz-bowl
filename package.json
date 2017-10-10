@@ -1,0 +1,32 @@
+{
+  "name": "quizbowl",
+  "version": "0.0.1",
+  "description": "A quizbowl game application",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/r-a303931/quiz-bowl.git"
+  },
+  "keywords": [
+    "quizbowl",
+    "quiz",
+    "jeapordy",
+    "game"
+  ],
+  "author": "Andrew Rioux",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/r-a303931/quiz-bowl/issues"
+  },
+  "homepage": "https://github.com/r-a303931/quiz-bowl#readme",
+  "devDependencies": {
+    "electron": "1.7.9",
+    "electron-builder": "^19.35.1"
+  },
+  "dependencies": {
+    "jquery": "^3.2.1"
+  }
+}
