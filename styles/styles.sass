@@ -1,5 +1,8 @@
 @import 'theme'
 
+@import 'game'
+@import 'menu'
+
 html
     width: 100%
     height: 100%
@@ -10,6 +13,7 @@ html
         @extend html
         padding: 20px
         box-sizing: border-box
+        background-color: $secondary-color
 
         #buttons
             position: fixed
@@ -19,6 +23,7 @@ html
             padding: 0
             width: 125px
             height: 45px
+            z-index: 20
 
             &:hover
                 #minimize

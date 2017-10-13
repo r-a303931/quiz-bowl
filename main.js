@@ -28,7 +28,7 @@ function createWindow () {
   }))
 
   // Open the DevTools.
-//   mainWindow.webContents.openDevTools()
+  // mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -48,9 +48,7 @@ app.on('ready', createWindow)
 app.on('window-all-closed', function () {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
+  app.quit();
 })
 
 app.on('activate', function () {

@@ -4,21 +4,85 @@
         <meta charset="UTF-8">
       </head>
       <body>
-        text
-
         <div id="buttons">
             <div id="close" onclick="win.close()"></div>
             <div id="maximize" onclick="maximized?win.unmaximize():win.maximize();maximized=!maximized;"></div>
             <div id="minimize" onclick="win.minimize()"></div>
         </div>
 
+        <div id="game">
+            <table>
+                <caption id="name"></caption>
+                <tbody>
+                    <tr>
+                        <th id="01"></th>
+                        <th id="02"></th>
+                        <th id="03"></th>
+                        <th id="04"></th>
+                        <th id="05"></th>
+                    </tr>
+                    <tr>
+                        <td id="11">$100</td>
+                        <td id="12">$100</td>
+                        <td id="13">$100</td>
+                        <td id="14">$100</td>
+                        <td id="15">$100</td>
+                    </tr>
+                    <tr>
+                        <td id="11">$100</td>
+                        <td id="12">$100</td>
+                        <td id="13">$100</td>
+                        <td id="14">$100</td>
+                        <td id="15">$100</td>
+                    </tr>
+                    <tr>
+                        <td id="21">$200</td>
+                        <td id="22">$200</td>
+                        <td id="23">$200</td>
+                        <td id="24">$200</td>
+                        <td id="25">$200</td>
+                    </tr>
+                    <tr>
+                        <td id="31">$300</td>
+                        <td id="32">$300</td>
+                        <td id="33">$300</td>
+                        <td id="34">$300</td>
+                        <td id="35">$300</td>
+                    </tr>
+                    <tr>
+                        <td id="41">$400</td>
+                        <td id="42">$400</td>
+                        <td id="43">$400</td>
+                        <td id="44">$400</td>
+                        <td id="45">$400</td>
+                    </tr>
+                    <tr>
+                        <td id="51">$500</td>
+                        <td id="52">$500</td>
+                        <td id="53">$500</td>
+                        <td id="54">$500</td>
+                        <td id="55">$500</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="menu">
+            <div id="teams">
+
+                <form id="addteam">
+                    <fieldset>
+                        <legend>Add a team</legend>
+                    </fieldset>
+                </form>
+            </div>
+            <div id="games">
+
+            </div>
+        </div>
+        
+        <script src="node_modules/jquery/dist/jquery.min.js"></script>
         <script src="index.js"></script>
         <link href="./styles.css" rel="stylesheet" />
-        
-        <script>
-            const {remote} = require('electron');
-            var maximized = false;
-            var win = remote.getCurrentWindow();
-        </script>
     </body>
 </html>
