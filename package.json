@@ -4,8 +4,8 @@
   "description": "A quizbowl game application",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "./node_modules/.bin/electron ."
+    "start:osx": "./node_modules/.bin/electron .",
+    "start:win": "node_modules\\.bin\\electron.cmd ."
   },
   "repository": {
     "type": "git",

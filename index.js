@@ -10,9 +10,13 @@ const jQuery = $ = require('jquery');
 
 var boardpath;
 
-if (appDir.slice(-8) == 'Electron') {
+const DEBUG = true;
+
+if (DEBUG) {
+    boardpath = 'samples';
+} else if (appDir.slice(-8) == 'Electron') { // Is it launched using VSCode debug? If so, this is true
     boardpath = '/Users/andrewrioux/Library/Application Support/quizbowl/boards.json';    
-} else {
+} else { // Otherwise, it is the last eight characters of `quiz-bowl`
     boardpath = path.join(appDir, 'boards.json');
 }
 
