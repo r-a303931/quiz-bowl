@@ -13,10 +13,10 @@ var boardpath;
 const DEBUG = true;
 
 if (DEBUG) {
-    boardpath = 'samples';
+    boardpath = 'C:\\Users\\Andrew\\Desktop\\quiz-bowl\\samples\\boards.json';
 } else if (appDir.slice(-8) == 'Electron') { // Is it launched using VSCode debug? If so, this is true
     boardpath = '/Users/andrewrioux/Library/Application Support/quizbowl/boards.json';    
-} else { // Otherwise, it is the last eight characters of `quiz-bowl`
+} else { // Otherwise, it is `uiz-bowl`
     boardpath = path.join(appDir, 'boards.json');
 }
 
@@ -56,6 +56,11 @@ function loadTable (index) {
         }
     }
 }
+
+$("td").click(function () {
+    $answer = $(this).find('.answer').text();
+    $question = $(this).find('.question').text();
+});
 
 loadTable(0);
 
