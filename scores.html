@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Scores</title>
+    </head>
+
+    <body>
+        <!--
+            <div id="teams">
+
+                <form id="addteam">
+                    <fieldset>
+                        <legend>Team menu</legend>
+
+                        <div>
+                            <div class="left">Team color: </div>
+                            <div class="right"><input id="color" class="jscolor" value="" /></div>
+                        </div>
+                        <div>
+                            <div class="left">Team name: </div>
+                            <div class="right"><input id="name" /></div>
+                        </div>
+
+                    </fieldset>
+                </form>
+            </div>
+            <div id="games">
+                <fieldset>
+                    <legend>Game menu</legend>
+                    <select id="gameselect">
+                        <option value="-1">Select a game...</option>
+                    </select>
+
+                </fieldset>
+            </div>
+        -->
+        <fieldset>
+            <legend>Game</legend>
+            <div class="current">
+                Current answer: <span id="qa-answer"></span>
+            </div>
+            <ul id="scores"></ul>
+        </fieldset>
+        <fieldset>
+            <legend>Team Management</legend>
+            <div class="formbar">
+                <div class="left">Team color: </div>
+                <div class="right"><input id="color" class="jscolor" value="" /></div>
+            </div>
+            <div class="formbar">
+                <div class="left">Team name: </div>
+                <div class="right"><input id="name" /></div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Board Management</legend>
+            <select id="gameselect">
+                <option value="-1">Select a board...</option>
+            </select>
+            <select id="values">
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="300">300</option>
+                <option value="400">400</option>
+                <option value="500">500</option>
+            </select>
+            <div id="editboard"></div>
+        </fieldset>
+        <script src="./node_modules/jquery/dists/jquery.min.js"></script>
+        <script src="./jscolor.min.js"></script>
+        <script src="./scores.js"></script>
+    </body>
+</html>

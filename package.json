@@ -1,6 +1,6 @@
 {
   "name": "quizbowl",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A quizbowl game application",
   "main": "main.js",
   "scripts": {

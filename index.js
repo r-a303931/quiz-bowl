@@ -1,26 +1,24 @@
-const {remote} = require('electron');
+const {remote, ipcRenderer} = require('electron');
 var maximized = false;
 var win = remote.getCurrentWindow();
-const appDir = remote.app.getPath('userData');
 
 const fs = require('fs');
 const path = require('path');
+const appDir = path.join(remote.app.getPath('userData'), 'quizbowl');
 
 const jQuery = $ = require('jquery');
 
-var boardpath;
+var boardpath, teampath;
 
-const DEBUG = false;
+const DEBUG = true;
 
 if (DEBUG) {
-    boardpath = 'C:\\Users\\Andrew\\Desktop\\quiz-bowl\\samples\\boards.json';
-} else if (appDir.slice(-8) == 'Electron') { // Is it launched using VSCode debug? If so, this is true
-    boardpath = '/Users/andrewrioux/Library/Application Support/quizbowl/boards.json';    
-} else { // Otherwise, it is `uiz-bowl`
+    boardpath = path.join(__dirname, 'samples', 'boards.json');
+    teampath = path.join(__dirname, 'samples', 'teams.json');
+} else {
     boardpath = path.join(appDir, 'boards.json');
+    teampath = path.join(appDir, 'teams.json');
 }
-
-const teampath = path.join(appDir, 'teams.json');
 
 if (!fs.existsSync(boardpath)) {
     fs.writeFileSync(boardpath, '[]', 'utf8');
@@ -38,9 +36,9 @@ Array.prototype.rando = function () {
 };
 
 var currenttable = null;
+var activeteams = [0];
 
 function loadTable (index) {
-    console.log(boarddata);
     currenttable = boarddata[index];
     for (var i = 0; i < 5; i++) {
         $("#0"+(i+1)).html(currenttable.categories[i]);
@@ -57,45 +55,56 @@ function loadTable (index) {
 }
 
 $("td").click(function (e) {
-    e.stopPropagation();
     $answer = $(this).find('.answer').text();
     $question = $(this).find('.question').text();
+    ipcRenderer.send('qa-update', $answer);
     $(this).addClass('called');
     $(this).off('click');
     $div = $("<div class=\"qa\"></div>");
     $off = $(this).offset();
+    var ow = $(this).outerWidth(), oh = $(this).outerHeight();
+    right = $(document).width() - ($off.left+ow);
+    bottom = $(document).height() - ($off.top+oh);
     $div.css({
         "top" : $off.top,
         "left" : $off.left,
-        "height": $(this).outerHeight(),
-        "width" : $(this).outerWidth()
+        "right" : right,
+        "bottom" : bottom
     });
+    $q = $(this).children();
+    $a = $q[1]; $q = $q[0];
+    var qc = (e2) => {
+
+    };
+    var qc2 = function () {
+        $div.html($q);
+        $cont = $("<div class=\"teams\"></div>");
+        $div.append($cont);
+        console.log("Animated");
+        for (var i = 0; i < activeteams.length; i++) {
+            console.log(i, activeteams[i], teamdata[activeteams[i]]);
+            $cont.append($(`<div class="team" style="background-color: #${teamdata[activeteams[i]].color}>${teamdata[activeteams[i]].name}</div>`))
+        }
+        $cont.children().click(qc);
+    };
+    $div.animate({
+        'top' : '20px',
+        'left': '20px',
+        'bottom' : '20px',
+        'right' : '20px'
+    }, 500, 'swing', console.log);
     $("#game").append($div);
 });
 
 for (var i = 0; i < boarddata.length; i++) {
-    $("#gameselect").append("<option value=\""+i+"\">"+boarddata[i].name+"</option>");
+    $("#menu").append(`<div class="board" data-index="${i}">${boarddata[i].name}</div>`);
 }
-$("#gameselect").on('change', () => {
-    if (parseInt($("#gameselect :selected").val())+1) loadTable($("#gameselect :selected").val());
-});
-
-jQuery(document).click(function () {
-    if ($("#game").css('top') != '0px') {
-        $("#game").animate({
-            'top' : '0',
-            'bottom' : '0'
-        }, 500, 'swing');
-    } else {
-        $("#game").animate({
-            'top': '-100%',
-            'bottom': '100%'
-        }, 500, 'swing');
-    }
-});
-
-$("#menu").click(function (e) {
-    e.stopPropagation();
+$("#menu div.board").on('click', function () {
+    loadTable(parseInt($(this).attr("data-index"), 10));
+    $("#game").animate({
+        'top' : '0',
+        'bottom' : '0'
+    }, 500, 'swing');
 });
 
 $("#game tbody").each(function () {
