@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start:osx": "./node_modules/.bin/electron .",
-    "start:win": "node_modules\\.bin\\electron.cmd ."
+    "start:win": "node_modules\\.bin\\electron.cmd .",
+    "sass": "sass --watch styles:. --no-cache --style=compressed"
   },
   "repository": {
     "type": "git",

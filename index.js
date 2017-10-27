@@ -10,7 +10,7 @@ const jQuery = $ = require('jquery');
 
 var boardpath;
 
-const DEBUG = true;
+const DEBUG = false;
 
 if (DEBUG) {
     boardpath = 'C:\\Users\\Andrew\\Desktop\\quiz-bowl\\samples\\boards.json';
@@ -42,7 +42,6 @@ var currenttable = null;
 function loadTable (index) {
     console.log(boarddata);
     currenttable = boarddata[index];
-    $("#game caption").html(currenttable.name);
     for (var i = 0; i < 5; i++) {
         $("#0"+(i+1)).html(currenttable.categories[i]);
     }
@@ -57,18 +56,46 @@ function loadTable (index) {
     }
 }
 
-$("td").click(function () {
+$("td").click(function (e) {
+    e.stopPropagation();
     $answer = $(this).find('.answer').text();
     $question = $(this).find('.question').text();
+    $(this).addClass('called');
+    $(this).off('click');
+    $div = $("<div class=\"qa\"></div>");
+    $off = $(this).offset();
+    $div.css({
+        "top" : $off.top,
+        "left" : $off.left,
+        "height": $(this).outerHeight(),
+        "width" : $(this).outerWidth()
+    });
+    $("#game").append($div);
 });
 
-loadTable(0);
+for (var i = 0; i < boarddata.length; i++) {
+    $("#gameselect").append("<option value=\""+i+"\">"+boarddata[i].name+"</option>");
+}
+$("#gameselect").on('change', () => {
+    if (parseInt($("#gameselect :selected").val())+1) loadTable($("#gameselect :selected").val());
+});
 
 jQuery(document).click(function () {
-    $("#game").animate({
-        'top' : '0',
-        'bottom' : '0'
-    }, 500, 'swing');
+    if ($("#game").css('top') != '0px') {
+        $("#game").animate({
+            'top' : '0',
+            'bottom' : '0'
+        }, 500, 'swing');
+    } else {
+        $("#game").animate({
+            'top': '-100%',
+            'bottom': '100%'
+        }, 500, 'swing');
+    }
+});
+
+$("#menu").click(function (e) {
+    e.stopPropagation();
 });
 
 $("#game tbody").each(function () {

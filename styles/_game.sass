@@ -10,6 +10,12 @@
     padding: 20px
     box-sizing: border-box
 
+    .qa
+        position: absolute
+        background-color: $secondary-color
+        border: 1px solid $primary-color
+        box-sizing: border-box
+
     table
         border-collapse: collapse
         width: 100%
@@ -44,8 +50,11 @@
                     vertical-align: center
                     text-align: center
                     font-size: 2em
+                    position: relative
 
                     div.question, div.answer
                         display: none
-                        
+
+                .called
+                    color: $grayed-primary
             

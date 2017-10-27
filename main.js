@@ -14,7 +14,7 @@ let mainWindow
 function createWindow () {
   var {width, height} = electron.screen.getPrimaryDisplay().workAreaSize;
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: width/2, height: height, x: 0, y: 0, frame: false, show: false})
+  mainWindow = new BrowserWindow({width: width/2, height: height, x: width/2, y: 0, frame: false, show: false})
 
   mainWindow.once('ready-to-show', () => {
     mainWindow.show();
@@ -28,7 +28,7 @@ function createWindow () {
   }))
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
