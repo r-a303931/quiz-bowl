@@ -34,7 +34,10 @@ ipcMain.on('score-update', (e, data) => childWindow && childWindow.webContents.s
 ipcMain.on('team-update', (e, data) => childWindow && childWindow.webContents.send('team-update', data));
 ipcMain.on('qa-update', (e, data) => childWindow && childWindow.webContents.send('qa-update', data));
 
+ipcMain.on('team-answer', (e, data) => mainWindow && mainWindow.webContents.send('team-answer', data));
+ipcMain.on('team-answer-close', (e, data) => mainWindow && mainWindow.webContents.send('team-answer-close', data));
 ipcMain.on('board-update', (e, data) => mainWindow && mainWindow.webContents.send('board-update', data));
+ipcMain.on('scores-show', (e, data) => mainWindow && mainWindow.webContents.send('scores-show', data));
 
 function createWindow () {
   var {width, height} = electron.screen.getPrimaryDisplay().workAreaSize;

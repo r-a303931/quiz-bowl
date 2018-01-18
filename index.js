@@ -36,7 +36,7 @@ Array.prototype.rando = function () {
 };
 
 var currenttable = null;
-var activeteams = [0];
+var activeteams = [0, 1, 2];
 
 function loadTable (index) {
     currenttable = boarddata[index];
@@ -57,7 +57,7 @@ function loadTable (index) {
 $("td").click(function (e) {
     $answer = $(this).find('.answer').text();
     $question = $(this).find('.question').text();
-    ipcRenderer.send('qa-update', $answer);
+    ipcRenderer.send('qa-update', [$answer, $(this).clone().children().remove().end().text()]);
     $(this).addClass('called');
     $(this).off('click');
     $div = $("<div class=\"qa\"></div>");
@@ -73,27 +73,29 @@ $("td").click(function (e) {
     });
     $q = $(this).children();
     $a = $q[1]; $q = $q[0];
-    var qc = (e2) => {
-
-    };
-    var qc2 = function () {
-        $div.html($q);
-        $cont = $("<div class=\"teams\"></div>");
-        $div.append($cont);
-        console.log("Animated");
-        for (var i = 0; i < activeteams.length; i++) {
-            console.log(i, activeteams[i], teamdata[activeteams[i]]);
-            $cont.append($(`<div class="team" style="background-color: #${teamdata[activeteams[i]].color}>${teamdata[activeteams[i]].name}</div>`))
-        }
-        $cont.children().click(qc);
-    };
     $div.animate({
         'top' : '20px',
         'left': '20px',
         'bottom' : '20px',
         'right' : '20px'
-    }, 500, 'swing', console.log);
+    }, 500, 'swing', function () {
+        $div.html($q);
+    });
     $("#game").append($div);
+    ipcRenderer.once('team-answer', (e, data) => {
+        console.log("Hi");
+        $(".qa .question").text($answer);
+        ipcRenderer.once('team-answer-close', (e, data) => {
+            $div.animate({
+                top: $off.top,
+                left: $off.left,
+                right: right,
+                bottom: bottom
+            }, 500, 'swing', function () {
+                $(this).remove();
+            });
+        });
+    });
 });
 
 for (var i = 0; i < boarddata.length; i++) {
@@ -112,4 +114,35 @@ $("#game tbody").each(function () {
     $(this).children().each(function () {
         $(this).height($height / 6);
     });
+});
+
+var scoresShown = false;
+ipcRenderer.on('scores-show', (e, data) => {
+    console.log(JSON.parse(data));
+    if (scoresShown) {
+        scoresShown = false;
+        $(".qa").remove();
+    } else {
+        scoresShown = true;
+        data = JSON.parse(data);
+        data.sort(function (a, b) {
+            return a.score - b.score
+        });
+        $div = $(`<div class="scores-show"></div>`);
+        let max = 0;
+        for (let team of data) {
+            max = Math.max(team.score, max);
+        }
+        for (let team of data) {
+            $div.append(`
+                <div class="score-row" style="height: ${100 / data.length}%">
+                    <div class="score">${team.score}</div>
+                    <div class="row-box">
+                        <div class="score-bar" style="height: 100%; width: ${100 * (team.score / max)}%; background-color: #${team.color}"></div>
+                    </div>
+                </div>
+            `);
+        }
+        $("#game").append($div);
+    }
 });

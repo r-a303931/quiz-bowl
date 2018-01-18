@@ -1,6 +1,17 @@
 [
     {
         "name" : "Test 1",
-        "color" : "00ff00"
+        "color" : "00ff00",
+        "score" : 0
+    },
+    {
+        "name" : "Test 2",
+        "color" : "ff0000",
+        "score" : 0
+    },
+    {
+        "name" : "Test 3",
+        "color" : "0000ff",
+        "score" : 0
     }
 ]

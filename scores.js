@@ -36,18 +36,16 @@ Array.prototype.rando = function () {
 };
 
 var currenttable = null;
-var activeteams = [];
+var activeteams = [0, 1, 2];
+var currentscore = null;
 
 ipcRenderer.on('team-update', (e, data) => {
 
 });
 
-ipcRenderer.on('score-update', (e, data) => {
-    
-});
-
 ipcRenderer.on('qa-update', (e, data) => {
-    $("#qa-answer").html(data);
+    $("#qa-answer").text(`${data[0]}, prize: ${data[1]}`);
+    currentscore = data[1];
 });
 
 function loadTable (i) {
@@ -60,3 +58,26 @@ for (var i = 0; i < boarddata.length; i++) {
 $("#gameselect").on('change', () => {
     if (parseInt($("#gameselect :selected").val())+1) loadTable($("#gameselect :selected").val());
 });
+
+$("#scores").html("");
+for (var i of activeteams) {
+    let team = teamdata[i];
+    $("#scores").append($(`<li id="team${i}" style="background-color: #${team.color}">${team.name}: 0</li>`));
+    $(".current-answer").append($(`<button class="answer" data-teamid="${i}" style="background-color: #${team.color}">${team.name}</button>`))
+}
+
+$(".current-answer .answer").click(function () {
+    console.log("Hi");
+    console.log(currentscore);
+    if (!currentscore) return;
+    let id = $(this).attr("data-teamid");
+    let team = teamdata[id];
+    team.score += parseInt(currentscore.slice(1), 10);
+    currentscore = null;
+    ipcRenderer.send('team-answer', 'data');
+    $("#scores").html("");
+    for (var i of activeteams) {
+        let team = teamdata[i];
+        $("#scores").append($(`<li id="team${i}" style="background-color: #${team.color}">${team.name}: ${team.score}</li>`));
+    }
+})

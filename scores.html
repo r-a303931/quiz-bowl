@@ -40,6 +40,15 @@
                 Current answer: <span id="qa-answer"></span>
             </div>
             <ul id="scores"></ul>
+            <div class="current-answer">
+
+            </div>
+            <div class="close-window">
+                <button onclick="ipcRenderer.send('team-answer-close', 'data');">Close answer</button>
+            </div>
+            <div class="show-scores">
+                <button onclick="ipcRenderer.send('scores-show', JSON.stringify(teamdata))">Show scores</button>
+            </div>
         </fieldset>
         <fieldset>
             <legend>Team Management</legend>

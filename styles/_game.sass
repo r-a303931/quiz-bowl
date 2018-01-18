@@ -10,6 +10,44 @@
     padding: 20px
     box-sizing: border-box
 
+    .scores-show
+        position: absolute
+        background-color: $secondary-color
+        border: 1px solid $primary-color
+        box-sizing: border-box
+        transition: left 1s ease
+        transition: right 1s ease
+        transition: bottom 1s ease
+        transition: top 1s ease
+        display: flex
+        align-items: center
+        justify-content: center
+        color: $primary-color
+        font-size: 5em
+        top: 20px
+        left: 20px
+        right: 20px
+        bottom: 20px
+        flex-direction: column
+
+        .score-row
+            width: 100%
+            box-sizing: border-box
+            padding: 15px
+            margin: 0
+            display: flex
+            align-items: center
+
+            .score
+                width: 400px
+                float: left
+                height: 100%
+
+            .row-box
+                width: calc(100% - 400px)
+                float: right
+                height: 100%
+
     .qa
         position: absolute
         background-color: $secondary-color
