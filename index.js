@@ -54,6 +54,10 @@ function loadTable (index) {
     }
 }
 
+ipcRenderer.on('team-update', (e, data) => {
+    activeteams = data;
+});
+
 $("td").click(function (e) {
     $answer = $(this).find('.answer').text();
     $question = $(this).find('.question').text();
@@ -83,9 +87,9 @@ $("td").click(function (e) {
     });
     $("#game").append($div);
     ipcRenderer.once('team-answer', (e, data) => {
-        console.log("Hi");
         $(".qa .question").text($answer);
         ipcRenderer.once('team-answer-close', (e, data) => {
+            $div.html("");
             $div.animate({
                 top: $off.top,
                 left: $off.left,
@@ -118,16 +122,18 @@ $("#game tbody").each(function () {
 
 var scoresShown = false;
 ipcRenderer.on('scores-show', (e, data) => {
-    console.log(JSON.parse(data));
     if (scoresShown) {
         scoresShown = false;
-        $(".qa").remove();
+        $(".scores-show").remove();
     } else {
         scoresShown = true;
         data = JSON.parse(data);
-        data.sort(function (a, b) {
-            return a.score - b.score
+        console.log(data);
+        data = data.sort(function (a, b) {
+            return parseInt(a.score) - parseInt(b.score)
         });
+        data = data.reverse();
+        console.log(data);
         $div = $(`<div class="scores-show"></div>`);
         let max = 0;
         for (let team of data) {
@@ -136,13 +142,19 @@ ipcRenderer.on('scores-show', (e, data) => {
         for (let team of data) {
             $div.append(`
                 <div class="score-row" style="height: ${100 / data.length}%">
-                    <div class="score">${team.score}</div>
+                    <div class="score">
+                        ${team.name}<br />
+                        ${team.score}
+                    </div>
                     <div class="row-box">
-                        <div class="score-bar" style="height: 100%; width: ${100 * (team.score / max)}%; background-color: #${team.color}"></div>
+                        <div class="score-bar" style="width: 0; height: 100%; max-width: ${100 * (team.score / max)}%; background-color: #${team.color}"></div>
                     </div>
                 </div>
             `);
         }
         $("#game").append($div);
+        $div.find('.score-bar').animate({
+            "width" : "100%"
+        });
     }
 });

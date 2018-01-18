@@ -52,14 +52,23 @@
         </fieldset>
         <fieldset>
             <legend>Team Management</legend>
-            <div class="formbar">
-                <div class="left">Team color: </div>
-                <div class="right"><input id="color" class="jscolor" value="" /></div>
+            <select multiple id="teams" style="float: left; width: 290px; margin: 10px; margin-left: 0; box-sizing: border-box;">
+
+            </select>
+            <div style="float: left; width: calc(100% - 300px); margin: 0; box-sizing: border-box;">
+                <div class="formbar">
+                    <div class="left">Team color: </div>
+                    <div class="right"><input id="color" class="jscolor" value="" /></div>
+                </div>
+                <div class="formbar">
+                    <div class="left">Team name: </div>
+                    <div class="right"><input id="name" /></div>
+                </div>
+                <button id="save">Save information</button>
             </div>
-            <div class="formbar">
-                <div class="left">Team name: </div>
-                <div class="right"><input id="name" /></div>
-            </div>
+            <button id="addTeam" style="clear:both; float: left">
+                Add team
+            </button>
         </fieldset>
         <fieldset>
             <legend>Board Management</legend>

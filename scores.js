@@ -40,7 +40,7 @@ var activeteams = [0, 1, 2];
 var currentscore = null;
 
 ipcRenderer.on('team-update', (e, data) => {
-
+    activeteams = data;
 });
 
 ipcRenderer.on('qa-update', (e, data) => {

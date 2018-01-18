@@ -31,9 +31,9 @@ function chclosed () {
 }
 
 ipcMain.on('score-update', (e, data) => menuWindow && menuWindow.webContents.send('score-update', data));
-ipcMain.on('team-update', (e, data) => menuWindow && menuWindow.webContents.send('team-update', data));
 ipcMain.on('qa-update', (e, data) => menuWindow && menuWindow.webContents.send('qa-update', data));
 
+ipcMain.on('team-update', (e, data) => boardWindow && boardWindow.webContents.send('team-update', data));
 ipcMain.on('team-answer', (e, data) => boardWindow && boardWindow.webContents.send('team-answer', data));
 ipcMain.on('team-answer-close', (e, data) => boardWindow && boardWindow.webContents.send('team-answer-close', data));
 ipcMain.on('board-update', (e, data) => boardWindow && boardWindow.webContents.send('board-update', data));
@@ -52,18 +52,20 @@ function createWindow () {
   }
   
   if (extDisplay) {
-    boardWindow = new BrowserWindow({width: extDisplay.size.width, height: extDisplay.size.height, x: extDisplay.bounds.x, y: extDisplay.bounds.y, frame: false, show: false})
-    menuWindow = new BrowserWindow({width: width, height: height, x: 0, y: 0, frame: true, show: false});
+    boardWindow = new BrowserWindow({width: extDisplay.size.width, height: extDisplay.size.height, x: extDisplay.bounds.x, y: extDisplay.bounds.y, frame: false, show: false});
+    menuWindow =  new BrowserWindow({width: width,                 height: height,                 x: 0,                   y: 0,                   frame: true,  show: false});
   } else {
-    boardWindow = new BrowserWindow({width: width/2, height: height, x: width/2, y: 0, frame: false, show: false})
-    menuWindow = new BrowserWindow({width: width/2, height: height, x: 0, y: 0, frame: true, show: false});
+    boardWindow = new BrowserWindow({width: width/2, height: height, x: width/2, y: 0, frame: false, show: false});
+    menuWindow =  new BrowserWindow({width: width/2, height: height, x: 0,       y: 0, frame: true,  show: false});
   }
 
   boardWindow.once('ready-to-show', () => {
     boardWindow.show();
-    boardWindow.maximize();
-    if (boardWindow.setFullScreen) {
-      boardWindow.setFullScreen(true);
+    if (!!extDisplay) {
+      boardWindow.maximize();
+      if (boardWindow.setFullScreen) {
+        boardWindow.setFullScreen(true);
+      }
     }
   });
   menuWindow.once('ready-to-show', () => {
