@@ -10,74 +10,92 @@ const url = require('url')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow, childWindow
+let boardWindow, menuWindow
 
 function chclosed () {
-  if (mainWindow) {
-    childWindow = new BrowserWindow({width: width/2, height: height, x: 0, y: 0, frame: true, show: false});
-    childWindow.once('ready-to-show', () => {
-      childWindow.show();
+  if (boardWindow) {
+    menuWindow = new BrowserWindow({width: width/2, height: height, x: 0, y: 0, frame: true, show: false});
+    menuWindow.once('ready-to-show', () => {
+      menuWindow.show();
     });
-    childWindow.loadURL(url.format({
+    menuWindow.loadURL(url.format({
       pathname: path.join(__dirname, 'scores.html'),
       protocol: 'file:',
       slashes: true
     }))
 
-    childWindow.on('closed', chclosed);
+    menuWindow.on('closed', chclosed);
   } else {
-    childWindow = null
+    menuWindow = null
   }
 }
 
-ipcMain.on('score-update', (e, data) => childWindow && childWindow.webContents.send('score-update', data));
-ipcMain.on('team-update', (e, data) => childWindow && childWindow.webContents.send('team-update', data));
-ipcMain.on('qa-update', (e, data) => childWindow && childWindow.webContents.send('qa-update', data));
+ipcMain.on('score-update', (e, data) => menuWindow && menuWindow.webContents.send('score-update', data));
+ipcMain.on('team-update', (e, data) => menuWindow && menuWindow.webContents.send('team-update', data));
+ipcMain.on('qa-update', (e, data) => menuWindow && menuWindow.webContents.send('qa-update', data));
 
-ipcMain.on('team-answer', (e, data) => mainWindow && mainWindow.webContents.send('team-answer', data));
-ipcMain.on('team-answer-close', (e, data) => mainWindow && mainWindow.webContents.send('team-answer-close', data));
-ipcMain.on('board-update', (e, data) => mainWindow && mainWindow.webContents.send('board-update', data));
-ipcMain.on('scores-show', (e, data) => mainWindow && mainWindow.webContents.send('scores-show', data));
+ipcMain.on('team-answer', (e, data) => boardWindow && boardWindow.webContents.send('team-answer', data));
+ipcMain.on('team-answer-close', (e, data) => boardWindow && boardWindow.webContents.send('team-answer-close', data));
+ipcMain.on('board-update', (e, data) => boardWindow && boardWindow.webContents.send('board-update', data));
+ipcMain.on('scores-show', (e, data) => boardWindow && boardWindow.webContents.send('scores-show', data));
 
 function createWindow () {
   var {width, height} = electron.screen.getPrimaryDisplay().workAreaSize;
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: width/2, height: height, x: width/2, y: 0, frame: false, show: false})
-  childWindow = new BrowserWindow({width: width/2, height: height, x: 0, y: 0, frame: true, show: false});
+  
+  var displays = electron.screen.getAllDisplays(), extDisplay = null;
+  for (var i of displays) {
+    if (i.bounds.x != 0 || i.bounds.y != 0) {
+      extDisplay = i;
+      break;
+    }
+  }
+  
+  if (extDisplay) {
+    boardWindow = new BrowserWindow({width: extDisplay.size.width, height: extDisplay.size.height, x: extDisplay.bounds.x, y: extDisplay.bounds.y, frame: false, show: false})
+    menuWindow = new BrowserWindow({width: width, height: height, x: 0, y: 0, frame: true, show: false});
+  } else {
+    boardWindow = new BrowserWindow({width: width/2, height: height, x: width/2, y: 0, frame: false, show: false})
+    menuWindow = new BrowserWindow({width: width/2, height: height, x: 0, y: 0, frame: true, show: false});
+  }
 
-  mainWindow.once('ready-to-show', () => {
-    mainWindow.show();
+  boardWindow.once('ready-to-show', () => {
+    boardWindow.show();
+    boardWindow.maximize();
+    if (boardWindow.setFullScreen) {
+      boardWindow.setFullScreen(true);
+    }
   });
-  childWindow.once('ready-to-show', () => {
-    childWindow.show();
+  menuWindow.once('ready-to-show', () => {
+    menuWindow.show();
   });
 
   // and load the index.html of the app.
-  mainWindow.loadURL(url.format({
+  boardWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
     slashes: true
   }))
-  childWindow.loadURL(url.format({
+  menuWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'scores.html'),
     protocol: 'file:',
     slashes: true
   }))
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  // boardWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
-  mainWindow.on('closed', function () {
+  boardWindow.on('closed', function () {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    mainWindow = null
-    childWindow = null
+    boardWindow = null
+    menuWindow = null
     app.quit();
   });
 
-  childWindow.on('closed', chclosed);
+  menuWindow.on('closed', chclosed);
 }
 
 // This method will be called when Electron has finished
