@@ -36,12 +36,14 @@ Array.prototype.rando = function () {
 };
 
 var currenttable = null;
-var activeteams = [0,  2];
+var activeteams = [];
 var currentscore = null;
+for (var i in teamdata) {
+    if (teamdata[i].active) {
+        activeteams.push(parseInt(i, 10));
+    }
+}
 
-ipcRenderer.on('team-update', (e, data) => {
-    activeteams = data;
-});
 
 ipcRenderer.on('qa-update', (e, data) => {
     $("#qa-answer").text(`${data[0]}, prize: ${data[1]}`);
@@ -65,19 +67,52 @@ for (var i of activeteams) {
     $("#scores").append($(`<li id="team${i}" style="background-color: #${team.color}">${team.name}: 0</li>`));
     $(".current-answer").append($(`<button class="answer" data-teamid="${i}" style="background-color: #${team.color}">${team.name}</button>`))
 }
-
 for (let i in teamdata) {
     if (i == 'rando') continue;
+    let cclass = activeteams.indexOf(parseInt(i, 10)) == -1 ? 'unactive' : 'active';
     $("#teams").append(`
-        <option value="${i}">${teamdata[i].name}</option>
+        <option value="${i}" class="${cclass}">${teamdata[i].name}</option>
     `);
 }
-$("#teams").on("change", () => {
+$("#teams").on("change", function () {
     let team = teamdata[$("#teams :selected").val()];
     $("#currentTeamEdit").val($(this).find(":selected").val());
-    $("#color").val(team.color);
+    document.getElementById('color').jscolor.fromString(team.color);
     $("#name").val(team.name);
+    let active = activeteams.indexOf(parseInt($("#currentTeamEdit").val(), 10)) != -1;
+    $("#activeTeam").prop('checked', active);
 });
+
+var save =  () => {
+    if (!$("#currentTeamEdit").attr("value")) return;
+    let id = parseInt($("#currentTeamEdit").val(), 10);
+    let active = activeteams.indexOf(parseInt($("#currentTeamEdit").val(), 10)) != -1;
+    teamdata[$("#currentTeamEdit").attr("value")] = {
+        name: $("#name").val(),
+        color: $("#color").val(),
+        active: $("#activeTeam").prop('checked'),
+        score: 0
+    };
+    if (!active && !$("#activeTeam").prop('checked')) { return; }
+    if (active && $("#activeTeam").prop('checked')) { return; }
+
+    if ($("#activeTeam").prop('checked')) {
+        activeteams.push(id);
+    } else {
+        activeteams.splice(activeteams.indexOf(id), 1);
+    }
+    activeteams.sort();
+
+    $("#scores").html("");
+    $(".current-answer").html("");
+    for (var i of activeteams) {
+        let team = teamdata[i];
+        $("#scores").append($(`<li id="team${i}" style="background-color: #${team.color}">${team.name}: 0</li>`));
+        $(".current-answer").append($(`<button class="answer" data-teamid="${i}" style="background-color: #${team.color}">${team.name}</button>`))
+    }
+
+    fs.writeFileSync(teampath, JSON.stringify(teamdata, null, 4), 'utf8');
+};
 
 $(".current-answer .answer").click(function () {
     console.log("Hi");
@@ -93,11 +128,4 @@ $(".current-answer .answer").click(function () {
         let team = teamdata[i];
         $("#scores").append($(`<li id="team${i}" style="background-color: #${team.color}">${team.name}: ${team.score}</li>`));
     }
-})
-
-for (let i in teamdata) {
-	if (i == 'rando') continue;
-	let team = teamdata[i];
-	let active = activeteams.indexOf(i) !== -1 ? ' class="active"' : ''
-	$("#teams").append($(`<option value="${i}"${active}>${team.name}</option>`));
-}
+});

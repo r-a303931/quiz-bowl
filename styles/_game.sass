@@ -1,121 +1,122 @@
 @import 'theme'
 
-#game
-    position: absolute
-    left: 0
-    right: 0
-    top: -100%
-    bottom: 100%
-    background-color: $secondary-color
-    padding: 20px
-    box-sizing: border-box
-
-    .scores-show
+#gamebody
+    #game
         position: absolute
+        left: 0
+        right: 0
+        top: -100%
+        bottom: 100%
         background-color: $secondary-color
-        border: 1px solid $primary-color
+        padding: 20px
         box-sizing: border-box
-        transition: left 1s ease
-        transition: right 1s ease
-        transition: bottom 1s ease
-        transition: top 1s ease
-        display: flex
-        align-items: center
-        justify-content: center
-        color: $primary-color
-        font-size: 5em
-        top: 20px
-        left: 20px
-        right: 20px
-        bottom: 20px
-        flex-direction: column
 
-        .score-row
-            width: 100%
+        .scores-show
+            position: absolute
+            background-color: $secondary-color
+            border: 1px solid $primary-color
             box-sizing: border-box
-            padding: 15px
-            margin: 0
+            transition: left 1s ease
+            transition: right 1s ease
+            transition: bottom 1s ease
+            transition: top 1s ease
             display: flex
             align-items: center
+            justify-content: center
+            color: $primary-color
+            font-size: 5em
+            top: 20px
+            left: 20px
+            right: 20px
+            bottom: 20px
+            flex-direction: column
 
-            .score
-                width: 300px
-                float: left
-                height: 100%
+            .score-row
+                width: 100%
+                box-sizing: border-box
+                padding: 15px
+                margin: 0
                 display: flex
-                align-content: center
-                text-align: center
+                align-items: center
 
-            .score-bar
-                height: 100%
-                width: 0
-
-            .row-box
-                width: calc(100% - 300px)
-                float: right
-                height: 100%
-
-    .qa
-        position: absolute
-        background-color: $secondary-color
-        border: 1px solid $primary-color
-        box-sizing: border-box
-        transition: left 1s ease
-        transition: right 1s ease
-        transition: bottom 1s ease
-        transition: top 1s ease
-        display: flex
-        align-items: center
-        justify-content: center
-        color: $primary-color
-        font-size: 5em
-
-        .teams
-            display: flex
-            justify-content: space-around
-
-            .team
-                border-radius: 10px
-
-    table
-        border-collapse: collapse
-        width: 100%
-        height: 100%
-        padding: 0px
-        box-sizing: border-box
-        margin: 0
-
-        caption
-            color: $primary-color
-            box-sizing: border-box
-            margin: 0
-            border: 1px solid $primary-color
-            padding: 20px
-            box-sizing: border-box
-            border-bottom-width: 0px
-            font-size: 2em
-
-        tbody
-            color: $primary-color
-            width: 100%
-            box-sizing: border-box
-            margin: 0
-            height: 50%
-
-            tr
-
-                td, th
-                    box-sizing: border-box
-                    padding: 20px
-                    border: 1px solid $primary-color
-                    vertical-align: center
+                .score
+                    width: 300px
+                    float: left
+                    height: 100%
+                    display: flex
+                    align-content: center
                     text-align: center
-                    font-size: 2em
-                    position: relative
 
-                    div.question, div.answer
-                        display: none
+                .score-bar
+                    height: 100%
+                    width: 0
 
-                .called
-                    color: $grayed-primary
-            
+                .row-box
+                    width: calc(100% - 300px)
+                    float: right
+                    height: 100%
+
+        .qa
+            position: absolute
+            background-color: $secondary-color
+            border: 1px solid $primary-color
+            box-sizing: border-box
+            transition: left 1s ease
+            transition: right 1s ease
+            transition: bottom 1s ease
+            transition: top 1s ease
+            display: flex
+            align-items: center
+            justify-content: center
+            color: $primary-color
+            font-size: 5em
+
+            .teams
+                display: flex
+                justify-content: space-around
+
+                .team
+                    border-radius: 10px
+
+        table
+            border-collapse: collapse
+            width: 100%
+            height: 100%
+            padding: 0px
+            box-sizing: border-box
+            margin: 0
+
+            caption
+                color: $primary-color
+                box-sizing: border-box
+                margin: 0
+                border: 1px solid $primary-color
+                padding: 20px
+                box-sizing: border-box
+                border-bottom-width: 0px
+                font-size: 2em
+
+            tbody
+                color: $primary-color
+                width: 100%
+                box-sizing: border-box
+                margin: 0
+                height: 50%
+
+                tr
+
+                    td, th
+                        box-sizing: border-box
+                        padding: 20px
+                        border: 1px solid $primary-color
+                        vertical-align: center
+                        text-align: center
+                        font-size: 2em
+                        position: relative
+
+                        div.question, div.answer
+                            display: none
+
+                    .called
+                        color: $grayed-primary
+                

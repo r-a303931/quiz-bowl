@@ -4,7 +4,7 @@
         <title>Scores</title>
     </head>
 
-    <body>
+    <body id="menu">
         <!--
             <div id="teams">
 
@@ -66,7 +66,7 @@
                     <div class="right"><input id="name" /></div>
                 </div>
 				<input type="checkbox" id="activeTeam" name="activeTeam" /><label for="activeTeam">Active team</label> <br />
-                <button id="save">Save information</button>
+                <button id="save" onclick="save();">Save information</button>
             </div>
             <button id="addTeam" style="clear:both; float: left">
                 Add team
@@ -86,7 +86,10 @@
             </select>
             <div id="editboard"></div>
         </fieldset>
-        <script src="./node_modules/jquery/dists/jquery.min.js"></script>
+
+        <link rel="stylesheet" href="./styles.css" />
+
+        <script src="node_modules/jquery/dists/jquery.min.js"></script>
         <script src="./jscolor.min.js"></script>
         <script src="./scores.js"></script>
     </body>
