@@ -36,7 +36,7 @@ Array.prototype.rando = function () {
 };
 
 var currenttable = null;
-var activeteams = [0, 1, 2];
+var activeteams = [0,  2];
 var currentscore = null;
 
 ipcRenderer.on('team-update', (e, data) => {
@@ -81,3 +81,10 @@ $(".current-answer .answer").click(function () {
         $("#scores").append($(`<li id="team${i}" style="background-color: #${team.color}">${team.name}: ${team.score}</li>`));
     }
 })
+
+for (let i in teamdata) {
+	if (i == 'rando') continue;
+	let team = teamdata[i];
+	let active = activeteams.indexOf(i) !== -1 ? ' class="active"' : ''
+	$("#teams").append($(`<option value="${i}"${active}>${team.name}</option>`));
+}
