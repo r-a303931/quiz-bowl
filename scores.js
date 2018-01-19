@@ -66,6 +66,19 @@ for (var i of activeteams) {
     $(".current-answer").append($(`<button class="answer" data-teamid="${i}" style="background-color: #${team.color}">${team.name}</button>`))
 }
 
+for (let i in teamdata) {
+    if (i == 'rando') continue;
+    $("#teams").append(`
+        <option value="${i}">${teamdata[i].name}</option>
+    `);
+}
+$("#teams").on("change", () => {
+    let team = teamdata[$("#teams :selected").val()];
+    $("#currentTeamEdit").val($(this).find(":selected").val());
+    $("#color").val(team.color);
+    $("#name").val(team.name);
+});
+
 $(".current-answer .answer").click(function () {
     console.log("Hi");
     console.log(currentscore);
