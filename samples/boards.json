@@ -2,56 +2,96 @@
     {
         "name" : "Test1",
         "categories" : [
-            "AE",
-            "L",
-            "ES",
-            "Ch",
-            "Enc"
+            "Uniform",
+            "Memory Work",
+            "Leadership",
+            "Aerospace",
+            "Drill"
         ],
         "values" : {
             "100" : {
-                "1" : [],
-                "2" : [],
-                "3" : [],
-                "4" : [],
-                "5" : []
+                "1" : [
+                    ["What is the proper placement of insignia on the ABU/BDU uniform?", "Center on collar, 1\" from bottom edge"]
+                ],
+                "2" : [
+                    ["What is the CAP founding date?", "December 1, 1941"]
+                ],
+                "3" : [
+                    ["What does a warrior defend?", "A warrior defends their personal honor"]
+                ],
+                "4" : [
+                    ["What are the four forces of flight?", "Lift, gravity, thrust, and drag"]
+                ],
+                "5" : [
+                    ["How is a perfect about face performed", "(Demonstration needed)"]
+                ]
             },
             "200" : {
-                "1" : [],
-                "2" : [],
-                "3" : [],
-                "4" : [],
-                "5" : []
+                "1" : [
+                    ["What is the uniform regulation identifier?", "CAPM 39-1"]
+                ],
+                "2" : [
+                    ["What is the cadet motto?", "'Semper Vigilans', latin for 'Always Vigilant"]
+                ],
+                "3" : [
+                    ["Complete the sentence: Praise in Public, ________ in Private", "Correct"]
+                ],
+                "4" : [
+                    ["What instrument measures altitude in an airplane?", "The altimeter"]
+                ],
+                "5" : [
+                    ["What do the members of the far right column do on the command 'Eyes, Right'?", "Nothing, they continue to look straight ahead"]
+                ]
             },
             "300" : {
-                "1" : [],
-                "2" : [],
-                "3" : [],
-                "4" : [],
-                "5" : []
+                "1" : [
+                    ["What color(s) of boots are allowed to be worn with the ABU/BDU uniform?", "Black"]
+                ],
+                "2" : [
+                    ["What are the CAP core values?", "Integrity, Volunteer Service, Excellence, and Respect"]
+                ],
+                "3" : [
+                    ["What does SQ3R stand for?", "It stands for survey, question, read, review, and recall"]
+                ],
+                "4" : [
+                    ["What are the five layers of the atmosphere?", "The troposphere, tropopause, stratosphere, mesosphere, and thermosphere"]
+                ],
+                "5" : [
+                    ["What is the proper arm swing distance?", "6\" to the front and 3\" to the rear"]
+                ]
             },
             "400" : {
-                "1" : [],
-                "2" : [],
-                "3" : [],
-                "4" : [],
-                "5" : []
+                "1" : [
+                    ["What are the regulations for hair?", "No more than 1 &frac14; inch in bulk, hair not touching the ears and sideburns not going past the lower ear lobe"]
+                ],
+                "2" : [
+                    ["Who is the Middle East Region commander?", "Col John M. Knowles"]
+                ],
+                "3" : [
+                    ["Define motivation", "Motivation is the reason for an action. Motivation is that which gives purpose and direction to a behavior. In short, motivation is your 'why.'"]
+                ],
+                "4" : [
+                    ["What was the name of the first US space station?", "Skylab"]
+                ],
+                "5" : [
+                    ["How much time does the cadet drill guide recommend that cadets practice drill?", "At least 15 minutes"]
+                ]
             },
             "500" : {
                 "1" : [
-                    ["Question1", "Answer1"]
+                    ["How many specialty patches are allowed on the ABU/BDU uniform?", "The total number of badges and patches worn will not exceed five"]
                 ],
                 "2" : [
-                    ["Question2", "Answer2"]
+                    ["What is the preamble to the US Constitution?", "We the People of the United States, in Order to form a more perfect Union, establish Justice, insure domestic Tranquility, provide for the common defence, promote the general Welfare, and secure the Blessings of Liberty to ourselves and our Posterity, do ordain and establish this Constitution for the United States of America."]
                 ],
                 "3" : [
-                    ["Question3", "Answer3"]
+                    ["What are the four elements of successful coaching?", "Dialogue, empowerment, action, and improvement"]
                 ],
                 "4" : [
-                    ["Question4", "Answer4"]
+                    ["What is the name of the highest and lowest point of an orbit?", "Apogee (highest) and perigee (lowest)"]
                 ],
                 "5" : [
-                    ["Question5", "Answer5"]
+                    ["What does the drill symbol that represents the squadron commander look like?", "<img src=\"./sqcomm.png\" />"]
                 ]
             }
         }
