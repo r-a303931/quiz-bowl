@@ -59,7 +59,7 @@ ipcRenderer.on('team-update', (e, data) => {
 });
 
 $("td").click(function (e) {
-    $answer = $(this).find('.answer').text();
+    $answer = $(this).find('.answer').html();
     $question = $(this).find('.question').text();
     ipcRenderer.send('qa-update', [$answer, $(this).clone().children().remove().end().text()]);
     $(this).addClass('called');
@@ -87,7 +87,7 @@ $("td").click(function (e) {
     });
     $("#game").append($div);
     ipcRenderer.once('team-answer', (e, data) => {
-        $(".qa .question").text($answer);
+        $(".qa .question").html($answer);
         ipcRenderer.once('team-answer-close', (e, data) => {
             $div.html("");
             $div.animate({
