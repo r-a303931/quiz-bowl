@@ -1,19 +1,19 @@
 [
     {
-        "name": "Test 1",
+        "name": "Alpha Flight",
         "color": "00ff00",
         "active": true,
         "score": 0
     },
     {
-        "name": "Test 2",
-        "color": "ff0000",
+        "name": "Bravo Flight",
+        "color": "FF0000",
         "active": true,
         "score": 0
     },
     {
-        "name": "Test 3",
-        "color": "0000ff",
+        "name": "Charlie Flight",
+        "color": "00ffff",
         "active": true,
         "score": 0
     }

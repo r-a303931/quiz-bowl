@@ -58,7 +58,22 @@ ipcRenderer.on('team-update', (e, data) => {
     activeteams = data;
 });
 
-$("td").click(function (e) {
+ipcRenderer.on('question-select', (e, data) => {
+    display.bind($("#"+data))();
+});
+
+ipcRenderer.on('table-select', (e, data) => {
+    console.log(data);
+    loadTable(data);
+    $("#game").animate({
+        'top' : '0',
+        'bottom' : '0'
+    }, 500, 'swing');
+});
+
+$("td").click(display);
+
+function display (elem) {
     $answer = $(this).find('.answer').html();
     $question = $(this).find('.question').text();
     ipcRenderer.send('qa-update', [$answer, $(this).clone().children().remove().end().text()]);
@@ -100,12 +115,13 @@ $("td").click(function (e) {
             });
         });
     });
-});
+}
 
 for (var i = 0; i < boarddata.length; i++) {
     $("#menu").append(`<div class="board" data-index="${i}">${boarddata[i].name}</div>`);
 }
 $("#menu div.board").on('click', function () {
+    ipcRenderer.send('table-select', parseInt($(this).attr("data-index"), 10));
     loadTable(parseInt($(this).attr("data-index"), 10));
     $("#game").animate({
         'top' : '0',

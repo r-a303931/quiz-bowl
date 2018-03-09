@@ -74,7 +74,7 @@
                     ["What was the name of the first US space station?", "Skylab"]
                 ],
                 "5" : [
-                    ["How much time does the cadet drill guide recommend that cadets practice drill?", "At least 15 minutes"]
+                    ["What is the 'Demo-Perf' method of teaching drill?", "Tell, Show, Do, Review"]
                 ]
             },
             "500" : {
@@ -91,7 +91,7 @@
                     ["What is the name of the highest and lowest point of an orbit?", "Apogee (highest) and perigee (lowest)"]
                 ],
                 "5" : [
-                    ["What does the drill symbol that represents the squadron commander look like?", "<img src=\"./sqcomm.png\" />"]
+                    ["How much time does the cadet drill guide recommend that cadets practice drill", "At least 15 minutes"]
                 ]
             }
         }

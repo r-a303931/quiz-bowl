@@ -33,11 +33,13 @@ function chclosed () {
 ipcMain.on('score-update', (e, data) => menuWindow && menuWindow.webContents.send('score-update', data));
 ipcMain.on('qa-update', (e, data) => menuWindow && menuWindow.webContents.send('qa-update', data));
 
+ipcMain.on('table-select', (e, data) => boardWindow && boardWindow.webContents.send('table-select', data));
 ipcMain.on('team-update', (e, data) => boardWindow && boardWindow.webContents.send('team-update', data));
 ipcMain.on('team-answer', (e, data) => boardWindow && boardWindow.webContents.send('team-answer', data));
 ipcMain.on('team-answer-close', (e, data) => boardWindow && boardWindow.webContents.send('team-answer-close', data));
 ipcMain.on('board-update', (e, data) => boardWindow && boardWindow.webContents.send('board-update', data));
 ipcMain.on('scores-show', (e, data) => boardWindow && boardWindow.webContents.send('scores-show', data));
+ipcMain.on('question-select', (e, data) => boardWindow && boardWindow.webContents.send('question-select', data));
 
 function createWindow () {
   var {width, height} = electron.screen.getPrimaryDisplay().workAreaSize;

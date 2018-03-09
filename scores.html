@@ -4,7 +4,7 @@
         <title>Scores</title>
     </head>
 
-    <body id="menu">
+    <body id="score-menu">
         <!--
             <div id="teams">
 
@@ -74,6 +74,8 @@
         </fieldset>
         <fieldset>
             <legend>Board Management</legend>
+            <input id="deductPoints" type="checkbox" />
+            <label for="deductPoints">Deduct points on incorrect answers?</label><br />
             <select id="gameselect">
                 <option value="-1">Select a board...</option>
             </select>
@@ -85,6 +87,12 @@
                 <option value="500">500</option>
             </select>
             <div id="editboard"></div>
+        </fieldset>
+        <fieldset>
+            <legend>Categories</legend>
+            <table id="categories">
+
+            </table>
         </fieldset>
 
         <link rel="stylesheet" href="./styles.css" />

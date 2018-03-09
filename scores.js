@@ -52,21 +52,38 @@ ipcRenderer.on('qa-update', (e, data) => {
 
 function loadTable (i) {
     currenttable = boarddata[i];
+    $("#categories").html("");
+    $("#categories").append(`<tr id="fakeBoardHeaders"></tr>`);
+    for (let i of currenttable.categories) {
+        $("#fakeBoardHeaders").append(`<th>${i}</th>`);
+    }
+    for (let i of [1,2,3,4,5]) {
+        $row = $(`<tr></tr>`);
+        for (let j of currenttable.categories) {
+            $row.append(`<td><button onclick="selectQuestion('${j}', ${i * 100});this.disabled=true">${i * 100}</button></td>`);
+        }
+        $("#categories").append($row);
+    }
 }
 
 for (var i = 0; i < boarddata.length; i++) {
     $("#gameselect").append("<option value=\""+i+"\">"+boarddata[i].name+"</option>");
 }
 $("#gameselect").on('change', () => {
-    if (parseInt($("#gameselect :selected").val())+1) loadTable($("#gameselect :selected").val());
+    if (parseInt($("#gameselect :selected").val())+1) {
+        loadTable($("#gameselect :selected").val());
+        ipcRenderer.send('table-select', $("#gameselect :selected").val());
+    }
 });
 
 $("#scores").html("");
 for (var i of activeteams) {
     let team = teamdata[i];
     $("#scores").append($(`<li id="team${i}" style="background-color: #${team.color}">${team.name}: 0</li>`));
-    $(".current-answer").append($(`<button class="answer" data-teamid="${i}" style="background-color: #${team.color}">${team.name}</button>`))
+    $(".current-answer").append($(`<button class="fail" data-teamid="${i}" style="background-color: #${team.color}">${team.name} failed</button>`));
+    $(".current-answer").append($(`<button class="answer" data-teamid="${i}" style="background-color: #${team.color}">${team.name} got it</button>`));
 }
+$(".current-answer").append($(`<button class="answer" data-teamid="-1">No one got it right</button>`))
 for (let i in teamdata) {
     if (i == 'rando') continue;
     let cclass = activeteams.indexOf(parseInt(i, 10)) == -1 ? 'unactive' : 'active';
@@ -108,24 +125,59 @@ var save =  () => {
     for (var i of activeteams) {
         let team = teamdata[i];
         $("#scores").append($(`<li id="team${i}" style="background-color: #${team.color}">${team.name}: 0</li>`));
-        $(".current-answer").append($(`<button class="answer" data-teamid="${i}" style="background-color: #${team.color}">${team.name}</button>`))
+        $(".current-answer").append($(`<button class="fail" data-teamid="${i}" style="background-color: #${team.color}">${team.name} failed</button>`));
+        $(".current-answer").append($(`<button class="answer" data-teamid="${i}" style="background-color: #${team.color}">${team.name} got it</button>`));
     }
+    $(".current-answer").append($(`<button class="answer" data-teamid="-1">No one got it right</button>`))
 
     fs.writeFileSync(teampath, JSON.stringify(teamdata, null, 4), 'utf8');
+
+    $(".current-answer .answer").click(answer);
+    $(".current-answer .fail").click(fail);
 };
 
-$(".current-answer .answer").click(function () {
+var answer = function () {
     console.log("Hi");
     console.log(currentscore);
     if (!currentscore) return;
     let id = $(this).attr("data-teamid");
+    ipcRenderer.send('team-answer', 'data');
+    if (id == "-1") return;
     let team = teamdata[id];
     team.score += parseInt(currentscore.slice(1), 10);
     currentscore = null;
-    ipcRenderer.send('team-answer', 'data');
     $("#scores").html("");
     for (var i of activeteams) {
         let team = teamdata[i];
         $("#scores").append($(`<li id="team${i}" style="background-color: #${team.color}">${team.name}: ${team.score}</li>`));
     }
-});
+}
+
+var fail = function () {
+    if (!$("#deductPoints").prop("checked")) return;
+    if (!currentscore) return;
+    let id = $(this).attr("data-teamid");
+    console.log(id);
+    if (id == "-1") return;
+    let team = teamdata[id];
+    console.log(team);
+    team.score -= parseInt(currentscore.slice(1), 10);
+    $("#scores").html("");
+    for (var i of activeteams) {
+        let team = teamdata[i];
+        $("#scores").append($(`<li id="team${i}" style="background-color: #${team.color}">${team.name}: ${team.score}</li>`));
+    }
+}
+
+$(".current-answer .answer").click(answer);
+$(".current-answer .fail").click(fail);
+
+
+function selectQuestion (category, price) {
+    let teamid = currenttable.categories.indexOf(category);
+    if (teamid === -1) return;
+    teamid += 1;
+    price /= 100;
+    console.log(teamid, price, `${teamid}${price}`);
+    ipcRenderer.send('question-select', `${price}${teamid}`);
+}
