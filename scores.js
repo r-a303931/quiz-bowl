@@ -37,13 +37,13 @@ Array.prototype.rando = function () {
 
 var currenttable = null;
 var activeteams = [];
+var dailyDouble = [];
 var currentscore = null;
 for (var i in teamdata) {
     if (teamdata[i].active) {
         activeteams.push(parseInt(i, 10));
     }
 }
-
 
 ipcRenderer.on('qa-update', (e, data) => {
     $("#qa-answer").text(`${data[0]}, prize: ${data[1]}`);
@@ -59,11 +59,22 @@ function loadTable (i) {
     }
     for (let i of [1,2,3,4,5]) {
         $row = $(`<tr></tr>`);
-        for (let j of currenttable.categories) {
-            $row.append(`<td><button onclick="selectQuestion('${j}', ${i * 100});this.disabled=true">${i * 100}</button></td>`);
+        for (let j in currenttable.categories) {
+            if (isNaN(parseInt(j))) continue;
+            let category = currenttable.categories[j];
+            $row.append(`<td><button id="${i}${j}" onclick="selectQuestion('${category}', ${i * 100});this.disabled=true">${i * 100}</button></td>`);
         }
         $("#categories").append($row);
     }
+    let ir = 1 + Math.round(Math.random() * 5);
+    let jr = Math.round(Math.random() * 5);
+    dailyDouble = [ir, jr];
+    $(`#${ir}${jr}`).css({
+        'background-color': 'red'
+    });
+    ipcRenderer.send('daily-double-update', JSON.stringify(
+        [ir, 1 + jr]
+    ))
 }
 
 for (var i = 0; i < boarddata.length; i++) {
@@ -137,8 +148,6 @@ var save =  () => {
 };
 
 var answer = function () {
-    console.log("Hi");
-    console.log(currentscore);
     if (!currentscore) return;
     let id = $(this).attr("data-teamid");
     ipcRenderer.send('team-answer', 'data');

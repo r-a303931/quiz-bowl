@@ -33,6 +33,7 @@ function chclosed () {
 ipcMain.on('score-update', (e, data) => menuWindow && menuWindow.webContents.send('score-update', data));
 ipcMain.on('qa-update', (e, data) => menuWindow && menuWindow.webContents.send('qa-update', data));
 
+ipcMain.on('daily-double-update', (e, data) => boardWindow && boardWindow.webContents.send('daily-double-update', data));
 ipcMain.on('table-select', (e, data) => boardWindow && boardWindow.webContents.send('table-select', data));
 ipcMain.on('team-update', (e, data) => boardWindow && boardWindow.webContents.send('team-update', data));
 ipcMain.on('team-answer', (e, data) => boardWindow && boardWindow.webContents.send('team-answer', data));

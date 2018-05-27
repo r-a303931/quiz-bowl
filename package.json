@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/r-a303931/quiz-bowl#readme",
   "devDependencies": {
-    "electron": "1.7.9",
+    "electron": "^2.0.0",
     "electron-builder": "^19.37.1"
   },
   "dependencies": {
